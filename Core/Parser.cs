@@ -1,15 +1,15 @@
 namespace Core;
 
-public static class Parser
+internal static class Parser
 {
-    public class InvalidInputException(string message, int lineNumber, string line) : Exception(message)
+    internal class InvalidInputException(string message, int lineNumber, string line) : Exception(message)
     {
         public int LineNumber { get; } = lineNumber;
 
         public string Line { get; } = line;
     }
     
-    public static InputModel Parse(string input)
+    internal static InputModel Parse(string input)
     {
         var lines = input.Split("\n");
 

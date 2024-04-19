@@ -1,10 +1,10 @@
 namespace Core;
 
-public record InputModel(
+internal record InputModel(
     Dictionary<string, int> DictWordsWithWeights,
     string[] UserWords
 );
 
-public record OutputModel(
+internal record CompletionsModel(
     Dictionary<string, string[]> Completions
 );

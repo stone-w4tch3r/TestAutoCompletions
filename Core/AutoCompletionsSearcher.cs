@@ -6,6 +6,10 @@ public static class AutoCompletionsSearcher
     {
         var inputModel = Parser.Parse(input);
         
-        return "TODO: Implement me!";
+        var completions = ReadableSearcher.SearchCompletions(inputModel);
+        
+        var str = Serializer.Serialize(completions);
+        
+        return str;
     }
 }

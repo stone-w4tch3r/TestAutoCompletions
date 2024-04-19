@@ -2,16 +2,9 @@ namespace Core;
 
 internal static class Parser
 {
-    internal class InvalidInputException(string message, int lineNumber, string line) : Exception(message)
-    {
-        public int LineNumber { get; } = lineNumber;
-
-        public string Line { get; } = line;
-    }
-    
     internal static InputModel Parse(string input)
     {
-        var lines = input.Split("\n");
+        var lines = SplitByNewLine(input);
 
         int dictLength;
         try
@@ -20,7 +13,7 @@ internal static class Parser
         }
         catch (Exception)
         {
-            throw new InvalidInputException("First line must be a valid dictionary length", 0, lines[0]);
+            throw new ParsingException("First line must be a valid dictionary length", 0, lines[0]);
         }
 
 
@@ -30,7 +23,7 @@ internal static class Parser
             var line = lines[i];
             var parts = line.Split(" ");
             if (!IsDictLineValid(parts))
-                throw new InvalidInputException("Invalid dictionary line", i, line);
+                throw new ParsingException("Invalid dictionary line", i, line);
 
             var word = parts[0];
             var weight = int.Parse(parts[1]);
@@ -44,7 +37,7 @@ internal static class Parser
         }
         catch (Exception)
         {
-            throw new InvalidInputException("Invalid user words length", dictLength + 1, lines[dictLength + 1]);
+            throw new ParsingException("Invalid user words length", dictLength + 1, lines[dictLength + 1]);
         }
 
         var userWords = new string[userWordsLength];
@@ -54,5 +47,22 @@ internal static class Parser
         return new(dictWordsWithWeights, userWords);
     }
 
-    private static bool IsDictLineValid(string[] parts) => parts.Length == 2 && int.TryParse(parts[1], out _);
+    private static bool IsDictLineValid(string[] parts)
+    {
+        return parts.Length == 2 && int.TryParse(parts[1], out _);
+    }
+
+    private static string[] SplitByNewLine(string str)
+    {
+        return str.Split(["\n", "\r"], StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    internal class ParsingException(string message, int lineNumber, string line) : Exception(message)
+    {
+        public int LineNumber { get; } = lineNumber;
+
+        public string Line { get; } = line;
+
+        public override string Message => $"{base.Message} [{LineNumber}: {Line}]";
+    }
 }

@@ -34,6 +34,7 @@ public class BasicTest
                                 kar
                                     kare
                                     karetachi
+                                
                                 """;
 
         var output = AutoCompletionsSearcher.SearchAutoCompletions(input);

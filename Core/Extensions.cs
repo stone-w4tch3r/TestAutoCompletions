@@ -13,15 +13,4 @@ internal static class Extensions
             i++;
         }
     }
-
-    public static T Map<T>(this string str, Func<string, T> func)
-    {
-        return func(str);
-    }
-
-    public static T Tap<T>(this T obj, Action<T> action)
-    {
-        action(obj);
-        return obj;
-    }
 }

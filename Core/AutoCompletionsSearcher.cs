@@ -6,7 +6,7 @@ public static class AutoCompletionsSearcher
     {
         var inputModel = Parser.Parse(input);
 
-        var completions = ReadableSearcher.SearchCompletions(inputModel);
+        var completions = FastSearcher.SearchCompletions(inputModel);
 
         var str = Serializer.Serialize(completions);
 

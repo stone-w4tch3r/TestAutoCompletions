@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Core;
 
 internal class ReadableSearcher
@@ -11,7 +13,7 @@ internal class ReadableSearcher
                     .Where(wordWithWeight => wordWithWeight.Key.StartsWith(userWord))
                     .OrderByDescending(wordWithWeight => wordWithWeight.Value)
                     .ThenBy(wordWithWeight => wordWithWeight.Key)
-                    .TakeNotMoreThan(10)
+                    .Take(10)
                     .Select(wordWithWeight => wordWithWeight.Key)
                     .ToArray()
             );

@@ -1,9 +1,11 @@
 ﻿namespace Core;
 
-public class AutoCompletionsSearcher
+public static class AutoCompletionsSearcher
 {
-    public string SearchAutoCompletions(string input)
+    public static string SearchAutoCompletions(string input)
     {
-        return "";
+        var inputModel = Parser.Parse(input);
+        
+        return "TODO: Implement me!";
     }
 }

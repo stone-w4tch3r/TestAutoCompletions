@@ -35,9 +35,8 @@ public class BasicTest
                                     kare
                                     karetachi
                                 """;
-        var searcher = new AutoCompletionsSearcher();
 
-        var output = searcher.SearchAutoCompletions(input);
+        var output = AutoCompletionsSearcher.SearchAutoCompletions(input);
 
         Assert.That(output, Is.EqualTo(expected));
     }

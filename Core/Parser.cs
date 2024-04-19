@@ -47,22 +47,18 @@ internal static class Parser
         return new(dictWordsWithWeights, userWords);
     }
 
-    private static bool IsDictLineValid(string[] parts)
+    private static bool IsDictLineValid(string[] parts) => 
+        parts.Length == 2 && int.TryParse(parts[1], out _);
+
+    private static string[] SplitByNewLine(string str) => 
+        str.Split(["\n", "\r"], StringSplitOptions.RemoveEmptyEntries);
+
+    private class ParsingException(string message, int lineNumber, string line) : Exception(message)
     {
-        return parts.Length == 2 && int.TryParse(parts[1], out _);
-    }
+        private int LineNumber { get; } = lineNumber;
 
-    private static string[] SplitByNewLine(string str)
-    {
-        return str.Split(["\n", "\r"], StringSplitOptions.RemoveEmptyEntries);
-    }
+        private string Line { get; } = line;
 
-    internal class ParsingException(string message, int lineNumber, string line) : Exception(message)
-    {
-        public int LineNumber { get; } = lineNumber;
-
-        public string Line { get; } = line;
-
-        public override string Message => $"{base.Message} [{LineNumber}: {Line}]";
+        public override string Message => $"{base.Message}, line {LineNumber}: '{Line}'";
     }
 }
